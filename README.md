@@ -20,9 +20,12 @@ Our analysis is based on data from two primary sources:
    - [Census Bureau TIGER/Line Shapefiles](https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.html)
 
 ### Methodology
-Integrating preschool assessment data from the NIEER yearbooks with geospatial data from the Census Bureau to perform comprehensive analysis, including DID model
-and probit regression.
+Integrating preschool assessment data from the NIEER yearbooks with geospatial data from the Census Bureau to perform comprehensive analysis, including DID model and probit regression.
 
+### Assessment example
+- Annual Spatial Data: ![annual_spatial_analysis](prek_viz/primary_result/annual_spatial_analysis/Geospatial_Data_2020-01-01 00/00/00.png)
+- State-level Data: ![state_analysis](prek_viz/primary_result/annual_state_analysis/Assessment Type Change Over Years for ALABAMA.png) 
+  
 ### Objectives
 - Evaluate and compare preschool assessment strategies across states.
 - Understand the impact of these strategies on early childhood education outcomes.
