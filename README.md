@@ -46,4 +46,6 @@ State-level Data: ![Alabama_analysis](prek_viz/primary_result/annual_state_analy
 - Time-series PreK Education Data Visualization: [ArcGIS Visualization](https://arcg.is/nbK4v0)
 - Interative Legend Version: [ArcGIS Visualization](https://arcg.is/0f0rHH0)
 
-### Continuous metrics:
+### Continuous research:
+- Recategorized preschool assessment into 4 major groups: combined, direct, no assessment, observation-based (with an increasing frequency in observation-based, although combined remains the highest)
+- Indivdidual-level characteristics: preschool retention rates
