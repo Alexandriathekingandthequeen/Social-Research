@@ -1,0 +1,205 @@
+---
+title: "Outcome"
+author: "QilinZhou"
+date: "2023-12-12"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+library(haven)
+library(dplyr)
+```
+
+
+```{r}
+outcome = read_dta("retention+difficulty.dta")
+```
+
+```{r}
+str(outcome)
+```
+
+
+```{r}
+# Five-year-olds
+filtered_data <- outcome %>% 
+  filter(age == 5)
+```
+
+```{r}
+filtered_data <- filtered_data %>%
+  filter(!is.na(edgrade), !is.na(edgrdly))
+```
+
+```{r}
+# Level of school enrollment previous October
+filtered_data <- filtered_data %>%
+  mutate(category = case_when(
+    as.character(edgrdly) == "10" ~ "Nursery (pre-school, pre-kindergarten)",
+    as.character(edgrdly) == "20" ~ "Kindergarten",
+    as.character(edgrdly) == "9998" ~ NA,
+    as.character(edgrdly) == "9999" ~ "NIU",
+    TRUE ~ "Others"  # Default case if none of the above
+  ))
+```
+
+```{r}
+filtered_data <- filtered_data %>%
+  filter(category != "NIU")
+```
+
+
+```{r}
+unique(filtered_data$category)
+```
+
+```{r}
+# Current enrollment
+filtered_data <- filtered_data %>%
+  mutate(category_2 = case_when(
+    as.character(edgrade) == "11" ~ "Nursery (pre-school, pre-K) part-day",
+ as.character(edgrade)  == "12" ~ "Nursery (pre-school, pre-K) full-day",
+ as.character(edgrade)  == "21" ~ "Kindergarten part-day",
+ as.character(edgrade) == "22" ~ "Kindergarten full-day",
+ as.character(edgrade) == "9998" ~ NA,
+ as.character(edgrade) == "9999" ~ "NIU",
+    TRUE ~ "Others"  # Default case if none of the above
+  ))
+```
+
+```{r}
+filtered_data <- filtered_data %>%
+  filter(category_2 != "NIU")
+```
+
+```{r}
+unique(filtered_data$category_2)
+```
+
+
+```{r}
+counts_prev_enroll <- filtered_data %>% count(category)
+counts_prev_enroll
+```
+
+```{r}
+counts_current_enroll <- filtered_data %>% count(category_2)
+counts_current_enroll
+```
+
+```{r}
+filtered_data <- filtered_data %>%
+  mutate(retention_status = case_when(
+    category == "Nursery (pre-school, pre-kindergarten)" & 
+    (category_2 == "Nursery (pre-school, pre-K) part-day" | category_2 == "Nursery (pre-school, pre-K) full-day") ~ "Retended",
+    !is.na(category) & !is.na(category_2) ~ "Not Retended",
+    TRUE ~ NA
+  ))
+```
+
+```{r}
+counts_retention <- filtered_data %>% count(retention_status)
+counts_retention
+```
+```{r}
+filtered_data <- filtered_data %>%
+  mutate(difficulty_status = case_when(
+    as.character(diffany) == "1" ~ "No difficulty",
+    as.character(diffany)  == "2" ~ "Has difficulty",
+    as.character(diffany) == "0" ~ "NIU",
+    TRUE ~ NA  # Default case if none of the above
+  ))
+```
+
+```{r}
+counts_difficulty <- filtered_data %>% count(difficulty_status)
+counts_difficulty
+```
+
+```{r}
+# Kindergarten enrollment rate 
+# Preschool enrollment rate
+# Retention among preschoolers
+
+# Among all five-year-old children who have enrolled kindergarten
+filtered_data <- filtered_data %>%
+  mutate(enrolled_kindergarten = case_when(
+    (category == "Kindergarten")|(category_2 == "Kindergarten full-day")|(category_2 == "Kindergarten part-day") ~ "Yes",
+    TRUE ~ "No" 
+  ))
+```
+
+```{r}
+yearly_kindergarten_enrollment_rate <- filtered_data %>%
+  group_by(year) %>%
+  summarise(
+    total_students = n(),
+    kindergarten_enrolled = sum(enrolled_kindergarten == "Yes"),
+    enrollment_rate = (kindergarten_enrolled / total_students) * 100
+  )
+```
+
+```{r}
+print(yearly_kindergarten_enrollment_rate)
+```
+
+
+```{r}
+# Among all five-year-old children who have enrolled preschool
+filtered_data <- filtered_data %>%
+  mutate(enrolled_preschool = case_when(
+    (category == "Nursery (pre-school, pre-kindergarten)")|(category_2 == "Nursery (pre-school, pre-K) part-day")|(category_2 == "Nursery (pre-school, pre-K) full-day") ~ "Yes",
+    TRUE ~ "No" 
+  ))
+```
+
+```{r}
+yearly_preschool_enrollment_rate <- filtered_data %>%
+  group_by(year) %>%
+  summarise(
+    total_students = n(),
+    preschool_enrolled = sum(enrolled_preschool == "Yes"),
+    enrollment_rate = (preschool_enrolled / total_students) * 100
+  )
+```
+
+```{r}
+print(yearly_preschool_enrollment_rate)
+```
+
+
+
+```{r}
+# For preschoolers
+yearly_retention_rate <- filtered_data %>%
+  filter(enrolled_preschool == "Yes") %>%  # Filter for only preschoolers
+  group_by(year) %>%
+  summarise(
+    total_preschoolers = n(),
+    num_retention = sum(retention_status == "Retended"),
+    retention_rate = (num_retention / total_preschoolers) * 100
+  )
+```
+
+```{r}
+print(yearly_retention_rate)
+```
+
+
+
+
+```{r}
+write.csv(filtered_data, "retention_diff.csv", row.names=FALSE)
+```
+
+
+
+
+
+
+
+
+
