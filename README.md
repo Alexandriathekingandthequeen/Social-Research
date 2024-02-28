@@ -37,7 +37,7 @@ State-level Data: ![Alabama_analysis](prek_viz/primary_result/annual_state_analy
 - While the assessment policy may not have a direct relationship with the overall performance of state preschool programs, it does reflect the quality of preK education a state aspires to provide and the level of attention it devotes to preK education. Despite the increasing emphasis on new assessment designs, resource allocation and enrollment rates did not increase or remain stable as expected. This calls for a re-evaluation of preschool resource allocation and an examination of the factors influencing household enrollment decisions.
 
 ### Tools and Technologies
-- **Data Processing and Analysis:** Python, Pandas, NumPy
+- **Data Processing, Extraction, Analysis:** Python, Pandas, NumPy, PyPDF2
 - **Geospatial Analysis:** GeoPandas, ArcGIS
 - **Data Visualization:** Matplotlib, Seaborn
 - **Data Management:** Power Query, MySQL
@@ -46,3 +46,4 @@ State-level Data: ![Alabama_analysis](prek_viz/primary_result/annual_state_analy
 - Time-series PreK Education Data Visualization: [ArcGIS Visualization](https://arcg.is/nbK4v0)
 - Interative Legend Version: [ArcGIS Visualization](https://arcg.is/0f0rHH0)
 
+### Continuous metrics:
