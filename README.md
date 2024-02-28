@@ -23,7 +23,7 @@ Our analysis is based on data from two primary sources:
 Integrating preschool assessment data from the NIEER yearbooks with geospatial data from the Census Bureau to perform comprehensive analysis, including DID model and probit regression.
 
 ### Assessment example
-Annual Spatial Data: ![Geospatial Data 2007](https://github.com/username/repository/blob/main/prek_viz/primary_result/annual_spatial_analysis/Geospatial_Data_2007-01-01_00-00-00.png?raw=true)
+Annual Spatial Data: ![Geospatial Data 2007](https://github.com/QilinZhou56/Social-Research/blob/main/prek_viz/primary_result/annual_spatial_analysis/Geospatial_Data_2007-01-01%2000%3A00%3A00.png)
 State-level Data: ![state_analysis](prek_viz/primary_result/annual_state_analysis/Assessment%20Type%20Change%20Over%20Years%20for%20ALABAMA.png)
 
 ### Objectives
